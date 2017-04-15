@@ -28,7 +28,7 @@
           </div>
           <div class="panel-body">
             <div class="well">
-              <h2 id="res-code"> | 1234</h2>
+              <h2 id="res-code-success"></h2>
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
           </div>
           <div class="panel-body">
             <div class="well">
-              <h2 id="res-code"> | 1234</h2>
+              <h2 id="res-code-waitlist"></h2>
             </div>
           </div>
         </div>
@@ -48,32 +48,41 @@
 
     <div class="row">
       <div class="col-lg-12">Control Panel</div>
-      <div class="col-lg-12"><a>Clear Table</a> | <a>API Table Link</a> | <a>API Wait List</a></div>
+      <div class="col-lg-12"><a id="clear-data">Clear Table</a> | <a href="/api/reservations" target="_blank">API Table Link</a> | <a href="/api/wait" target="_blank">API Wait List</a></div>
     </div>
 
   </div>
 
   <script type="text/javascript">
-    $("#search-btn").on("click", function() {
-      var searchedCharacter = $("#character-search").val().trim();
 
-      searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
-
-      $.get("/api/" + searchedCharacter, function(data) {
-        console.log(data);
-        if (data) {
-          $("#stats").show();
-          $("#name").text(data.name);
-          $("#role").text(data.role);
-          $("#age").text(data.age);
-          $("#force-points").text(data.forcePoints);
-        }
-        else {
-          $("#name").text("The force is not strong with this one. Your character was not found.");
-          $("#stats").hide();
-        }
-      });
+    $.get("/api/reservations", function(data) {
+      console.log(data);
+      if (data) {
+        $("#res-code-success").text(data.uniqueID);
+      }
+      else {
+        $("#res-code-success").text("No one likes your restaurant!");
+      }
     });
+
+    $.get("/api/wait", function(data) {
+      console.log(data);
+      if (data) {
+        $("#res-code-waitlist").text(data.uniqueID);
+      }
+    });
+
+    $('#clear-data').on('click', function(){
+
+      $(".well").empty();
+
+      $.post("/api/clear")
+        .done(function(data) {
+          console.log(data);         
+      });
+    })
+
+
   </script>
 </body>
 </html>
