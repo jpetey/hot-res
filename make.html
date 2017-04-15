@@ -60,6 +60,10 @@
 
       </div>
     </div>
+     <div class="row">
+      <div class="col-lg-12">Control Panel</div>
+      <div class="col-lg-12"><a>Clear Table</a> | <a>API Table Link</a> | <a>API Wait List</a></div>
+    </div>
   </div>
 
   <script type="text/javascript">
@@ -77,10 +81,11 @@
       $.post("/api/new", newReservation)
       .done(function(data) {
         console.log(data);
-       // if (for (var i = newReservation.length - 1; i >= 0; i--) {
-       //   newReservation[i]
-       // })
-        alert("Congrats, your table is booked!");
+        if(reservation === true){
+          alert("Congrats, your table is booked!");
+        }else
+          alert("Sorry, Sit tight, you have been added to the waitlist");
+        }
       });
     });
   </script>
