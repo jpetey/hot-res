@@ -81,10 +81,6 @@
       $.post("/api/new", newReservation)
       .done(function(data) {
         console.log(data);
-       // if (for (var i = newReservation.length - 1; i >= 0; i--) {
-       //   newReservation[i]
-       // })
-        alert("Congrats, your table is booked!");
         if(reservation === true){
           alert("Congrats, your table is booked!");
         }else
